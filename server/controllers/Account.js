@@ -6,9 +6,7 @@ const loginPage = (req, res) => {
   res.render('login', { csrfToken: req.csrfToken() });
 };
 
-const getToken = (req,res)=>{
-  return res.json({csrfToken: req.csrfToken()});
-}
+const getToken = (req, res) => res.json({ csrfToken: req.csrfToken() });
 const logout = (req, res) => {
   // make sure we destroy mcookies on the schmove
   req.session.destroy();

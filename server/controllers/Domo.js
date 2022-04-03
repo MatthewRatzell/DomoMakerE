@@ -3,9 +3,7 @@ const DomoModel = require('../models/Domo');
 
 const { Domo } = models;
 
-const makerPage = (req, res) => {
-  return res.render('app');
-};
+const makerPage = (req, res) => res.render('app');
 
 const makeDomo = async (req, res) => {
   if (!req.body.name || !req.body.age || !req.body.height) {
@@ -31,25 +29,22 @@ const makeDomo = async (req, res) => {
   }
 };
 
-
-
-
-const getDomos = (req, res) => {
-  return DomoModel.findByOwner(req.session.account._id, (err, docs) => {
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ error: 'An error occured!' });
-    }
-    return res.json({ domos: docs });
-  });
-}
+const getDomos = (req, res) => DomoModel.findByOwner(req.session.account._id, (err, docs) => {
+  if (err) {
+    console.log(err);
+    return res.status(400).json({ error: 'An error occured!' });
+  }
+  return res.json({ domos: docs });
+});
+/*
 const deleteDomos = (req, res) => {
-  console.dir("works");
-  db.Domo.remove( {} );
-}
+  console.dir('works');
+  db.Domo.remove({});
+};
+*/
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
-  deleteDomos,
+  // deleteDomos,
 };

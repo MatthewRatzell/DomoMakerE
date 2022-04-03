@@ -21,9 +21,7 @@ const requiresSecure = (req, res, next) => {
 };
 
 // if on local
-const bypassSecure = (req, res, next) => {
-  return next();
-};
+const bypassSecure = (req, res, next) => next();
 
 module.exports.requiresLogin = requiresLogin;
 module.exports.requiresLogout = requiresLogout;
