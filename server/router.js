@@ -5,7 +5,7 @@ const router = (app) => {
   app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
   app.get('/getDomos', mid.requiresLogin, controllers.Domo.getDomos);
 
- // app.post('/deleteDomos', mid.requiresLogin, controllers.Domo.deleteDomos);
+ app.post('/addRandomDomo', mid.requiresLogin, controllers.Domo.addRandomDomo);
 
   app.get('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.loginPage);
   app.post('/login', mid.requiresSecure, mid.requiresLogout, controllers.Account.login);

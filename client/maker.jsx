@@ -17,7 +17,16 @@ const handleDomo = (e) => {
     helper.sendPost(e.target.action, { name, age, height, _csrf }, loadDomosFromServer);
     return false;
 }
+const addRandomDomo= (e) =>{
 
+    e.preventDefault();
+    helper.hideError();
+
+    const _csrf = e.target.querySelector('#_csrf').value;
+
+    helper.sendPost(e.target.action, { _csrf },loadDomosFromServer);
+    return false;
+}
 const DomoForm = (props) => {
     return (
 
@@ -46,7 +55,21 @@ const DomoForm = (props) => {
         </form>
     );
 }
+const AddRandomDomosForm = (props) => {
+    return (
 
+        <form id="addRandomDomo"
+            name="addRandomDomo"
+            onSubmit={addRandomDomo}
+            action="/addRandomDomo"
+            method="POST"
+            className="addRandomDomo">
+
+            <input className="addRandomDomos" type="submit" value="Add a random domo" />
+            <input id="_csrf" type="hidden" name="_csrf" value={props.csrf} />
+        </form>
+    );
+}
 const DomoList = (props) => {
     //if empty
     if (props.domos.length === 0) {
@@ -79,6 +102,7 @@ const DomoList = (props) => {
 const loadDomosFromServer = async () => {
     const response = await fetch('/getDomos');
     const data = await response.json();
+
     ReactDOM.render(
         <DomoList domos={data.domos} />,
         document.getElementById('domos')
@@ -99,18 +123,11 @@ const init = async () => {
         document.getElementById('domos')
     );
 
-/*
-    //set up our deleteDomos function
-    const button = document.querySelector('#deleteButton');
-    //addeventlistener
-    
-    button.addEventListener('click',(e)=>
-    {
-        helper.sendPost('/deleteDomos',{csrf:25});
-        e.preventDefault();
-        return false;
-    });
-    */
+    ReactDOM.render(
+        <AddRandomDomosForm csrf={data.csrfToken} />,
+        document.getElementById('AddRandomDomosForm')
+    );
+
     loadDomosFromServer();
 }
 
