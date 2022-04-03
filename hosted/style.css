@@ -5,7 +5,10 @@ html, body {
     padding: 0;
     overflow-x: hidden;
 }
-
+#btnDiv{
+    display: flex;
+    justify-content: center;
+}
 #logo {
     height: 40px;
     width: 40;
@@ -50,7 +53,7 @@ nav:nth-child(1) {
 .domoForm {
     border: 2px solid #338acc;
     height: 35px;
-    width: 700px;
+    width: 1000px;
     margin-top:0px;
     padding-top:10px;
     background-color: #55acee;

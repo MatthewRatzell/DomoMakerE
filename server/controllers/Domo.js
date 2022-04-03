@@ -8,20 +8,21 @@ const makerPage = (req, res) => {
 };
 
 const makeDomo = async (req, res) => {
-  if (!req.body.name || !req.body.age) {
-    return res.status(400).json({ error: 'Both name and age are required!' });
+  if (!req.body.name || !req.body.age || !req.body.height) {
+    return res.status(400).json({ error: 'All fields are required' });
   }
 
   const domoData = {
     name: req.body.name,
     age: req.body.age,
+    height: req.body.height,
     owner: req.session.account._id,
   };
 
   try {
     const newDomo = new Domo(domoData);
     await newDomo.save();
-    return res.status(201).json({name: newDomo.name, age:newDomo.age});
+    return res.status(201).json({ name: newDomo.name, age: newDomo.age, height: newDomo.height });
   } catch (err) {
     if (err.code === 11000) {
       return res.status(400).json({ error: 'Domo already exists!' });
@@ -29,6 +30,10 @@ const makeDomo = async (req, res) => {
     return res.status(400).json({ error: 'An error occured' });
   }
 };
+
+
+
+
 const getDomos = (req, res) => {
   return DomoModel.findByOwner(req.session.account._id, (err, docs) => {
     if (err) {
@@ -38,8 +43,13 @@ const getDomos = (req, res) => {
     return res.json({ domos: docs });
   });
 }
+const deleteDomos = (req, res) => {
+  console.dir("works");
+  db.Domo.remove( {} );
+}
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
+  deleteDomos,
 };
